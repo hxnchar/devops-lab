@@ -6,7 +6,7 @@
 `docker run --rm --name devops-lab --cpus="1" --memory="64M" -p 80:80 hxnchar/devops-lab-3:0.1`
 
 ## Supported endpoints🧑‍💻
-**Users** microservice:
+
 - `/` --- homepage
 - `/homepage` --- also homepage
 - `/another-route` --- another page
