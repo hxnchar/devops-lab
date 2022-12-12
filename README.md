@@ -1,5 +1,5 @@
 # Week 3 lab (DevOps)
-## How to run? 🚀
+## How to run? 🤨
 - Run for usage:  `npm start`
 - Run for development:  `npm start:dev`
 - Run via docker: `docker build -t hxnchar/devops-lab-3:0.1 . `
