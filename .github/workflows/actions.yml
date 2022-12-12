@@ -1,0 +1,63 @@
+name: Lint & Push to DockerHub
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - name: Cache modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build image
+        run: docker build -t ${{secrets.DOCKERHUB_USERNAME}}/devops-lab-3:latest .
+ 
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/devops-lab-3:latest
+          push: true
+  check-endpoint:
+    needs: push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull image
+        run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/devops-lab-3:latest
+      - name: Run image
+        run: docker run -p 80:80 -d ${{secrets.DOCKERHUB_USERNAME}}/devops-lab-3
+      - name: Check home endpoint
+        run: |
+          sleep 5;
+          curl localhost:80/home;
