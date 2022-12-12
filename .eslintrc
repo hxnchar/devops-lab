@@ -4,13 +4,8 @@
     "node": true,
     "es2021": true
   },
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["sonarjs", "@typescript-eslint"],
   "extends": [
-    "prettier",
-    "eslint:recommended",
-    "metarhia",
-    "plugin:sonarjs/recommended"
+    "metarhia"
   ],
   "overrides": [
   ],
@@ -21,7 +16,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".ts"]
+        "extensions": [".js"]
       }
     }
   }

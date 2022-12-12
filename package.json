@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "start:dev": "nodemon src/index.js",
-    "lint": "eslint src/**/*.ts --ignore-path .gitignore",
+    "lint": "eslint src/**/*.js --ignore-path .gitignore",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

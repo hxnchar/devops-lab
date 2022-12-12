@@ -4,7 +4,7 @@ const PORT = 80;
 
 http.createServer((req, res) => {
   const path = req.url;
-  
+
   switch (path) {
     case '/':
       res.writeHead(200);
@@ -25,4 +25,4 @@ http.createServer((req, res) => {
   }
 }).listen(PORT);
 
-console.log(`[LOG] Server is running on port ${PORT}`);   
+console.log(`[LOG] Server is running on port ${PORT}`);
